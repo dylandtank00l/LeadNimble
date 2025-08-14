@@ -97,6 +97,26 @@
   from{ opacity:0; transform: translateY(10px) scale(.98); }
   to{ opacity:1; transform: none; }
 }
+    /* --- Fix clipped descender on “Consulting” --- */
+.supertitle{
+  line-height: 1.08;        /* was 1.02; gives room for descenders */
+  padding-bottom: 2px;       /* tiny buffer to avoid visual cropping */
+  display: inline-block;     /* ensures padding applies cleanly */
+}
+
+/* --- Tighten spacing throughout without changing layout/content --- */
+.hero{ padding-top: 28px; padding-bottom: 20px; }   /* was 48px / 32px */
+.section{ padding: 40px 0; }                        /* was 56px 0 */
+
+@media (max-width: 640px){
+  .section{ padding: 28px 0; }                      /* comfortable mobile rhythm */
+}
+
+/* Slightly tighter component gaps for a cleaner, modern feel */
+.hero-cards{ gap: 14px; margin-top: 22px; }         /* was 16px / 28px */
+.grid{ gap: 16px; }                                  /* was 20px */
+.feature{ padding: 18px; }                           /* was 20px */
+
   </style>
 </head>
 <body>
@@ -206,5 +226,6 @@
 </body>
 </html>
  
+
 
 
