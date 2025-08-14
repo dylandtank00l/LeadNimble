@@ -93,10 +93,58 @@ background-attachment: fixed;
     .logo-wrap{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:conic-gradient(from 180deg, var(--primary), var(--accent));box-shadow:0 8px 30px rgba(79,70,229,.35)}
     .logo{width:26px;height:26px}
     .wordmark{font-weight:800;letter-spacing:.3px;background:linear-gradient(90deg, #fff, #c7d2fe 40%, #a5f3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .cta{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:linear-gradient(90deg,var(--primary),#7c3aed);box-shadow:0 10px 30px rgba(79,70,229,.4);border:1px solid rgba(255,255,255,.08);min-height:44px;touch-action:manipulation}
+    .cta{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:linear-gradient(90deg,var(--primary),#7c3aed);box-shadow:0 10px 30px rgba(79,70,229,.4);border:1px solid rgba(255,255,255,.08);min-height:44px;touch-action:manipulation;
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.6), 0 0 30px rgba(6, 182, 212, 0.3);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(79, 70, 229, 0.8), 0 0 50px rgba(6, 182, 212, 0.5);
+    transform: translateY(-1px);
+  }
+}}
     .cta:hover{transform:translateY(-1px)}
     .cta svg{flex:0 0 auto}
+/* Cursor-follow glow for CTA */
+.cta{
+  position: relative;
+  isolation: isolate; /* keeps glow under the button’s content */
+}
 
+/* Glow layer */
+.cta::after{
+  content:"";
+  position:absolute;
+  inset:-4px;                    /* slight spill outside the button */
+  border-radius:14px;
+  pointer-events:none;
+  z-index:-1;                    /* behind the button content */
+  opacity: var(--glow-o, 0);     /* toggled by hover/focus */
+  transition: opacity .2s ease;
+  /* spotlight centered at --mx/--my; falls back to center */
+  background:
+    radial-gradient(140px 140px at var(--mx,50%) var(--my,50%),
+      rgba(99,102,241,.50),      /* indigo-500ish */
+      rgba(6,182,212,.35) 35%,   /* cyan-500ish */
+      transparent 60%);
+  filter: blur(14px);
+}
+
+/* show glow when “highlighted” (hover or keyboard focus) */
+.cta:is(:hover, :focus-visible){
+  --glow-o: 1;
+}
+
+/* Respect reduced motion: keep the effect static and subtle */
+@media (prefers-reduced-motion: reduce){
+  .cta::after{
+    filter: blur(10px);
+  }
+}
     /* Hero */
     .hero{
       display:grid;grid-template-columns:1fr;align-items:center;
@@ -289,7 +337,7 @@ background-attachment: fixed;
   <footer role="contentinfo">
     <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
       <small>© <span id="year"></span> LeadNimble</small>
-      <small>Meridian, Idaho • Remote-friendly</small>
+      <small>Boise, Idaho • Remote-friendly</small>
     </div>
   </footer>
 
@@ -313,6 +361,40 @@ background-attachment: fixed;
       // Fallback if IntersectionObserver unsupported
       reveals.forEach(el => el.classList.add('on'));
     }
+      // Cursor-follow glow for CTA
+  (function(){
+    const btn = document.querySelector('.cta');
+    if(!btn) return;
+
+    const set = (x, y) => {
+      btn.style.setProperty('--mx', x + 'px');
+      btn.style.setProperty('--my', y + 'px');
+    };
+
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      set(e.clientX - r.left, e.clientY - r.top);
+    });
+
+    // Center the glow on enter/focus; hide on leave/blur
+    btn.addEventListener('mouseenter', () => {
+      const r = btn.getBoundingClientRect();
+      set(r.width / 2, r.height / 2);
+    });
+    btn.addEventListener('focus', () => {
+      const r = btn.getBoundingClientRect();
+      set(r.width / 2, r.height / 2);
+    }, true);
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.removeProperty('--mx');
+      btn.style.removeProperty('--my');
+    });
+    btn.addEventListener('blur', () => {
+      btn.style.removeProperty('--mx');
+      btn.style.removeProperty('--my');
+    }, true);
+  })();
   </script>
 </body>
 </html>
