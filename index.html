@@ -20,7 +20,16 @@
     /* Reset */
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";color:var(--text);background: radial-gradient(1200px 800px at 10% -10%, rgba(79,70,229,.25), transparent 60%), radial-gradient(900px 600px at 100% 10%, rgba(6,182,212,.25), transparent 55%), linear-gradient(180deg, var(--bg-1), var(--bg-2)); overflow-x:hidden}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(79,70,229,.25), transparent 60%),
+        radial-gradient(900px 600px at 100% 10%, rgba(6,182,212,.25), transparent 55%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      overflow-x:hidden
+    }
     a{color:inherit;text-decoration:none}
     .container{max-width:1120px;margin-inline:auto;padding:24px}
 
@@ -69,11 +78,12 @@
       .nav .cta{display:none}
       .hero{min-height:58vh}
     }
-    /* Supertitle above the badge */
+
+    /* Supertitle above the badge — fixed descender clipping + lifted position */
     .supertitle{
       font-size: clamp(42px, 8.5vw, 72px);
-      line-height: 1.12;       /* fixed clipping */
-      margin: -14px 0 6px;     /* lifted upward */
+      line-height: 1.12;         /* prevents clipping on descenders like “g” */
+      margin: -14px 0 6px;       /* lift upward slightly */
       font-weight: 900;
       letter-spacing: .2px;
       background: linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
@@ -84,12 +94,13 @@
       background-size: 200% 100%;
       animation: shimmer 8s ease-in-out infinite, rise-in .7s ease both;
       display: inline-block;
-      padding-bottom: 55px;     /* prevents descender cutoff */
+      padding-bottom: 55px;       /* extra room for descenders */
     }
 
-    /* Center the hero’s first column contents */
+    /* Center the hero’s first column contents without affecting layout */
     .hero .hero-inner{ text-align:center; margin-inline:auto; }
 
+    /* Subtle gradient motion + gentle rise */
     @keyframes shimmer{
       0%,100%{ background-position: 0% 50%; }
       50%{ background-position: 100% 50%; }
@@ -99,30 +110,37 @@
       to{ opacity:1; transform: none; }
     }
 
-    /* === Compact spacing === */
+    /* === Compact spacing (general) === */
     .hero{
-      min-height:58vh;
-      padding-top:28px;
-      padding-bottom:0px;  /* was 20px, tightened */
+      min-height:58vh;         /* was 66vh */
+      padding-top:28px;        /* was 48px */
+      padding-bottom:0px;     /* tighter to next section */
     }
     .title{ margin:12px 0; }
     .subtitle{ margin-top:8px; }
     .hero-cards{ gap:14px; margin-top:18px; }
-    .section{ padding:40px 0; }
+    .section{ padding:40px 0; }   /* default compact section spacing */
     .grid{ gap:16px; }
     .feature{ padding:18px; }
     form{ gap:10px; padding:16px; }
     footer{ padding:20px 0; }
 
-    /* Tighten gap between hero and first section */
-    main > .section:first-of-type{ padding-top:16px; }
+    /* === Alignment logic ===
+       1) Slightly reduce top-padding only for the first section after hero
+          so the hero cards sit closer to “Why LeadNimble?”
+       2) Preserve the background break before the contact section by
+          restoring a larger top padding there.
+    */
+    main > .section:first-of-type{ padding-top:24px; } /* was 40px */
+    #contact.section{ padding-top:56px; }              /* restore separation */
 
-    /* Mobile tweaks */
+    /* Mobile tweaks keep things snug on small screens */
     @media (max-width:640px){
       .hero{ min-height:52vh; padding-top:22px; padding-bottom:8px; }
       .supertitle{ margin:-8px 0 6px; }
       .section{ padding:32px 0; }
-      main > .section:first-of-type{ padding-top:14px; }
+      main > .section:first-of-type{ padding-top:20px; }
+      #contact.section{ padding-top:56px; } /* keep the visual break on mobile too */
     }
   </style>
 </head>
@@ -130,6 +148,7 @@
   <header>
     <div class="container nav">
       <div class="brand">
+        <!-- Inline SVG logo (LN monogram) -->
         <div class="logo-wrap float" aria-hidden="true">
           <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LeadNimble logo">
             <defs>
@@ -221,7 +240,10 @@
   </footer>
 
   <script>
+    // Current year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal-on-scroll
     const observer = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); observer.unobserve(e.target);} });
     },{threshold:.12});
