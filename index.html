@@ -100,14 +100,29 @@
       .hero{min-height:56vh;padding-top:var(--s-5);padding-bottom:var(--s-4)}
       .section{padding:var(--s-6) 0}
     }
+/* Full-bleed headline */
+.hero .supertitle{
+  line-height: 1.2;
+  /* escape the 1120px container */
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw); /* center the full-bleed row */
+  padding-inline: var(--s-4);     /* keep nice side padding */
+  white-space: nowrap;            /* stay on one line when possible */
+}
 
+@media (max-width: 1150px){
+  .hero .supertitle{
+    white-space: normal;          /* allow wrap on small screens */
+  }
+}
     /* Supertitle */
     .supertitle{
-      font-size: clamp(42px, 8.5vw, 72px);
-      line-height: 4.02;
-      margin: -250px 0 var(--s-1);
+      font-size: clamp(42px, 8.2vw, 72px);
+      line-height: 1.5;
+      margin: -20px 0 var(--s-5);
       font-weight: 900;
-      letter-spacing: .2px;
+      letter-spacing: .9px;
       background: linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
       -webkit-background-clip: text;
       background-clip: text;
@@ -157,7 +172,7 @@
   <main class="container">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-inner">
-        <h2 class="supertitle reveal" id="hero-title" style="transition-delay:.0s">LeadNimble Consulting</h2>
+        <h2 class="supertitle reveal" id="hero-title" style="transition-delay:.0s">Salesforce Certified Consulting</h2>
         <div>
           <h1 class="title reveal" style="transition-delay:.05s">Fractional Salesforce Consultant for SMBs</h1>
 
@@ -239,5 +254,6 @@
   </script>
 </body>
 </html>
+
 
 
