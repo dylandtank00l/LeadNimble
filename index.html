@@ -1,251 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>LeadNimble — Fractional Salesforce Consultant</title>
-  <meta name="description" content="LeadNimble helps SMB revenue teams fix lead flow, clean data, and automate Salesforce + HubSpot with maintainable low-code." />
-  <link rel="icon" href="/favicon.ico" />
-  <style>
-    :root{
-      --bg-1:#0f172a; /* slate-900 */
-      --bg-2:#111827; /* gray-900 */
-      --primary:#4f46e5; /* indigo-600 */
-      --accent:#06b6d4; /* cyan-500 */
-      --card:#0b1220ee;
-      --text:#e5e7eb; /* gray-200 */
-      --muted:#9ca3af; /* gray-400 */
-      --ring: rgba(79,70,229,.6);
-
-      /* spacing scale for consistent vertical rhythm */
-      --s-1: 10px;
-      --s-2: 14px;
-      --s-3: 18px;
-      --s-4: 24px;
-      --s-5: 32px;
-      --s-6: 40px;
-      --s-7: 56px;
-      --s-8: 72px;
-    }
-html {
-  background: var(--bg-2);
-}
-    /* Reset */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
-      font-size: 16px; /* avoid iOS zoom on inputs */
-      line-height: 1.6;
-      color:var(--text);
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeadNimble — Fractional Salesforce Admin & Marketing Automation</title>
+<meta name="description" content="LeadNimble helps SMBs fix lead routing, clean CRM data, and launch low-code automation across Salesforce + HubSpot.">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root{
+    --bg-1:#0f172a; --bg-2:#111827; --card:#0b1220ee;
+    --text:#e5e7eb; --muted:#9ca3af;
+    --primary:#4f46e5; --accent:#06b6d4; --ok:#22c55e; --warn:#f59e0b;
+    --ring: rgba(79,70,229,.35);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .reveal{transition:none!important} }
+  body{
+    margin:0; color:var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    background:
+      radial-gradient(1200px 800px at 10% -10%, rgba(79,70,229,.25), transparent 60%),
+      radial-gradient(900px 600px at 100% 10%, rgba(6,182,212,.22), transparent 55%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1140px;margin-inline:auto;padding:20px}
 body {
-  margin:0;
-  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--text);
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  overflow-x: hidden;
-  position: relative; /* needed for pseudo-element layering */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
-  z-index: -1; /* behind all content */
-  pointer-events: none;
-  background:
-    radial-gradient(80% 60% at 10% -10%, rgba(79,70,229,.25), transparent 70%),
-    radial-gradient(70% 50% at 90% 20%, rgba(6,182,212,.25), transparent 70%),
-    linear-gradient(180deg, var(--bg-1), var(--bg-2));
-  will-change: transform; /* keeps it stuck to viewport smoothly */
-}
-background-attachment: fixed;
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-      overflow-x:hidden; /* guard against accidental horizontal scroll */
-    }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1120px;margin-inline:auto;padding-inline:var(--s-4);}
-
-    /* Utilities */
-    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-    .skip-link:focus{left:var(--s-4);top:var(--s-4);width:auto;height:auto;padding:.5rem 1rem;background:#111827;color:#fff;border-radius:12px;z-index:50}
-
-    /* Focus styles */
-    :focus{outline:none}
-    :focus-visible{box-shadow:0 0 0 4px var(--ring);border-radius:12px}
-
-    /* Header */
-    header{
-      position:sticky;top:0;z-index:20;
-      background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.7));
-      backdrop-filter:saturate(140%) blur(10px);
-      border-bottom:1px solid rgba(255,255,255,.06)
-    }
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);min-height:64px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo-wrap{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:conic-gradient(from 180deg, var(--primary), var(--accent));box-shadow:0 8px 30px rgba(79,70,229,.35)}
-    .logo{width:26px;height:26px}
-    .wordmark{font-weight:800;letter-spacing:.3px;background:linear-gradient(90deg, #fff, #c7d2fe 40%, #a5f3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .cta{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:linear-gradient(90deg,var(--primary),#7c3aed);box-shadow:0 10px 30px rgba(79,70,229,.4);border:1px solid rgba(255,255,255,.08);min-height:44px;touch-action:manipulation;
-  animation: glowPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(79, 70, 229, 0.6), 0 0 30px rgba(6, 182, 212, 0.3);
-    transform: translateY(0);
+  /* Header */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(10px);
+    background:linear-gradient(180deg, rgba(15,23,42,.85), rgba(17,24,39,.6));
+    border-bottom:1px solid rgba(255,255,255,.06)
   }
-  50% {
-    box-shadow: 0 0 25px rgba(79, 70, 229, 0.8), 0 0 50px rgba(6, 182, 212, 0.5);
-    transform: translateY(-1px);
-  }
-}}
-    .cta:hover{transform:translateY(-1px)}
-    .cta svg{flex:0 0 auto}
-/* Cursor-follow glow for CTA */
-.cta{
-  position: relative;
-  isolation: isolate; /* keeps glow under the button’s content */
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo-wrap{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;
+    background:conic-gradient(from 180deg,var(--primary),var(--accent)); box-shadow:0 8px 30px rgba(79,70,229,.35)}
+  .logo{width:26px;height:26px}
+  .wordmark{font-weight:800;letter-spacing:.2px;font-size:1.15rem;
+    background:linear-gradient(90deg,#fff,#c7d2fe 40%,#a5f3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .navlinks{display:flex;gap:16px;flex-wrap:wrap}
+  .navlinks a{padding:10px 12px;border-radius:10px;border:1px solid transparent}
+  .navlinks a:hover{border-color:rgba(255,255,255,.1)}
+  .cta{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;
+    background:linear-gradient(90deg,var(--primary),#7c3aed);box-shadow:0 10px 30px rgba(79,70,229,.4);
+    border:1px solid rgba(255,255,255,.08)}
+  .cta svg{flex:0 0 auto}
+
+  /* Hero */
+  .hero{min-height:66vh;display:grid;align-items:center}
+  .title{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:12px 0;
+    background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .subtitle{color:#cbd5e1;max-width:780px}
+  .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);
+    border-radius:999px;padding:6px 12px;color:var(--muted);background:rgba(255,255,255,.04)}
+
+  .hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:26px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+
+  /* Sections */
+  .section{padding:56px 0}
+  .section h2{margin:0 0 12px 0;font-size:1.6rem}
+  .muted{color:var(--muted)}
+
+  /* Horizontal scrollers */
+  .hscroll{display:grid;gap:14px}
+  .rail{display:flex;gap:14px;overflow:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+  .rail:focus{outline:none;box-shadow:0 0 0 4px var(--ring);border-radius:14px}
+  .pill{min-width:280px;scroll-snap-align:start;background:var(--card);border:1px solid rgba(255,255,255,.06);
+    border-radius:16px;padding:16px}
+  .pill h3{margin:.2rem 0 .4rem 0}
+  .controls{display:flex;gap:8px}
+  .btn{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--text);
+       border-radius:10px;padding:8px 10px;cursor:pointer}
+  .btn:focus{outline:none;box-shadow:0 0 0 4px var(--ring)}
+
+  /* Packages */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .pkg{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:18px}
+  .price{font-weight:800}
+  .go{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:10px 14px;border-radius:12px;
+      background:linear-gradient(90deg,var(--primary),#7c3aed);border:0;color:white;cursor:pointer}
+/* Hide horizontal scrollbar cross-browser */
+.rail {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;   /* smooth on iOS */
+  scrollbar-gutter: stable both-edges; /* avoids layout shifts */
 }
 
-/* Glow layer */
-.cta::after{
-  content:"";
-  position:absolute;
-  inset:-4px;                    /* slight spill outside the button */
-  border-radius:14px;
-  pointer-events:none;
-  z-index:-1;                    /* behind the button content */
-  opacity: var(--glow-o, 0);     /* toggled by hover/focus */
-  transition: opacity .2s ease;
-  /* spotlight centered at --mx/--my; falls back to center */
-  background:
-    radial-gradient(140px 140px at var(--mx,50%) var(--my,50%),
-      rgba(99,102,241,.50),      /* indigo-500ish */
-      rgba(6,182,212,.35) 35%,   /* cyan-500ish */
-      transparent 60%);
-  filter: blur(14px);
+/* Firefox */
+.rail { scrollbar-width: none; }
+
+/* IE/old Edge */
+.rail { -ms-overflow-style: none; }
+
+/* WebKit (Chrome/Safari) */
+.rail::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent;
 }
+  /* Process */
+  .steps{display:grid;gap:12px}
+  .step{display:flex;gap:12px;align-items:flex-start}
+  .num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+       background:linear-gradient(180deg,var(--primary),#7c3aed);font-weight:800}
 
-/* show glow when “highlighted” (hover or keyboard focus) */
-.cta:is(:hover, :focus-visible){
-  --glow-o: 1;
-}
+  /* FAQ */
+  details{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px}
+  details+details{margin-top:10px}
+  summary{cursor:pointer}
 
-/* Respect reduced motion: keep the effect static and subtle */
-@media (prefers-reduced-motion: reduce){
-  .cta::after{
-    filter: blur(10px);
-  }
-}
-    /* Hero */
-    .hero{
-      display:grid;grid-template-columns:1fr;align-items:center;
-      min-height:62vh;
-      padding-top:var(--s-6);
-      padding-bottom:var(--s-5);
-      position:relative
-    }
-    .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 14px;color:var(--muted);background:rgba(255,255,255,.06);min-height:44px}
-    .title{font-size:clamp(28px,7vw,48px);line-height:1.15;margin:var(--s-2) 0;background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-wrap:balance}
-    .subtitle{color:#cbd5e1;max-width:72ch;margin-top:var(--s-1)}
-    .hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s-3);margin-top:var(--s-4)}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+  /* Contact */
+  form{display:grid;gap:12px;background:var(--card);border:1px solid rgba(255,255,255,.08);
+       border-radius:16px;padding:20px}
+  label{font-weight:600}
+  input, textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+    background:rgba(2,6,23,.6);color:var(--text)}
+  input:focus, textarea:focus{outline:none;box-shadow:0 0 0 4px var(--ring)}
+  button[type="submit"]{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;
+    background:linear-gradient(90deg,var(--primary),#7c3aed);color:white;font-weight:700}
 
-    /* Sections */
-    .section{padding:var(--s-7) 0}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-4)}
-    .feature{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:20px}
-    .feature h3{margin:.2rem 0 var(--s-2);font-size:1.125rem}
+  /* Footer */
+  footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0;color:var(--muted)}
 
-    /* Contact */
-    form{display:grid;gap:var(--s-2);background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px}
-    label{font-weight:600}
-    input, textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(2,6,23,.6);color:var(--text);font-size:16px}
-    input::placeholder, textarea::placeholder{color:#94a3b8}
-    input:focus-visible, textarea:focus-visible{outline:none;box-shadow:0 0 0 4px var(--ring)}
-    button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;background:linear-gradient(90deg,var(--primary),#7c3aed);color:white;font-weight:700;min-height:44px;touch-action:manipulation}
-
-    /* Footer */
-    footer{border-top:1px solid rgba(255,255,255,.08);padding:var(--s-6) 0;color:var(--muted)}
-
-    /* Motion */
-    .float{animation:float 6s ease-in-out infinite}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-    .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
-    .reveal.on{opacity:1;transform:none}
-
-    /* Full-bleed headline */
-    .hero .supertitle{
-      line-height: 1.2;
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: calc(50% - 50vw);
-      padding-inline: var(--s-4);
-      white-space: nowrap;
-    }
-
-    /* Supertitle */
-    .supertitle{
-      font-size: clamp(36px, 9vw, 64px);
-      line-height: 1.3;
-      margin: -10px 0 var(--s-5);
-      font-weight: 900;
-      letter-spacing: .6px;
-      background: linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 6px 28px rgba(79,70,229,.25);
-      background-size: 200% 100%;
-      animation: shimmer 8s ease-in-out infinite, rise-in .7s ease both;
-      text-align:center;
-      text-wrap: balance;
-    }
-    .hero .hero-inner{ text-align:center; margin-inline:auto; }
-    @keyframes shimmer{0%,100%{ background-position: 0% 50%; }50%{ background-position: 100% 50%; }}
-    @keyframes rise-in{from{ opacity:0; transform: translateY(10px) scale(.98);}to{ opacity:1; transform: none;}}
-
-    /* Responsive tweaks */
-@media (max-width: 640px){
-  .nav .cta{
-    display:inline-flex;       /* show it */
-    padding:10px 14px;         /* slightly smaller */
-    font-size:.95rem;
-  }
-}
-      .hero{min-height:56vh;padding-top:var(--s-5);padding-bottom:var(--s-4)}
-      .section{padding:var(--s-6) 0}
-      /* Prevent 100vw overflow hack on very small screens */
-      .hero .supertitle{width:auto;max-width:100%;margin-left:0;white-space:normal;padding-inline:0}
-    }
-
-    @media (pointer: coarse){
-      /* Increase touch targets slightly on touch devices */
-      .cta, .badge, button{min-height:48px}
-    }
-
-    /* Reduced motion preference */
-    @media (prefers-reduced-motion: reduce){
-      *{animation:none!important;transition:none!important}
-      .float{animation:none}
-    }
-  </style>
+  /* Motion */
+  .float{animation:float 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .reveal{opacity:0;transform:translateY(14px);transition:all .6s ease}
+  .reveal.on{opacity:1;transform:none}
+  @media (max-width:640px){ .nav .navlinks{display:none} }
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
 
-  <header role="banner">
-    <div class="container nav" role="navigation" aria-label="Primary">
-      <div class="brand">
-        <!-- Inline SVG logo (LN monogram) -->
+<header>
+  <div class="container nav">
+    <div class="brand">
+             <!-- Inline SVG logo (LN monogram) -->
         <div class="logo-wrap float" aria-hidden="true">
           <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LeadNimble logo">
             <defs>
@@ -258,144 +160,196 @@ background-attachment: fixed;
             <path d="M16.5 20v24h12" stroke="url(#g)" stroke-width="5" stroke-linecap="round"/>
             <path d="M36 44V20l12 24V20" stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </div>
-        <div class="wordmark" style="font-size:1.25rem">LeadNimble</div>
       </div>
-      <a class="cta" href="#contact" aria-label="Book a fit call">
-        <span>Book a 15-min fit call</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-      </a>
+      <div class="wordmark">LeadNimble</div>
     </div>
-  </header>
+    <nav class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#experience">Experience</a>
+      <a href="#packages">Packages</a>
+      <a href="#process">Process</a>
+      <a href="#contact" class="cta">Contact</a>
+    </nav>
+  </div>
+</header>
 
-  <main id="main" class="container" role="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-inner">
-        <h2 class="supertitle reveal" id="hero-title" style="transition-delay:.0s">Salesforce Certified Consulting</h2>
-        <div>
-          <h1 class="title reveal" style="transition-delay:.05s">Fractional Salesforce Consultant for SMBs</h1>
+<main>
 
-          <div class="hero-cards" role="list" aria-label="Key capabilities">
-            <div class="card reveal" role="listitem" style="transition-delay:.15s">
-              <strong>Lead Flow &amp; Assignment</strong><br/>Reliable routing with Flows, queues, and assignment rules that prevent leaks and speed handoffs.
-            </div>
-            <div class="card reveal" role="listitem" style="transition-delay:.2s">
-              <strong>Data Quality &amp; Reporting</strong><br/>Duplicate prevention, field hygiene, and dashboards leadership can trust.
-            </div>
-            <div class="card reveal" role="listitem" style="transition-delay:.25s">
-              <strong>Automation &amp; Integrations</strong><br/>Low-code Salesforce Flows + HubSpot sync to eliminate busywork without heavy dev lift.
-            </div>
-          </div>
-        </div>
+  <!-- HERO -->
+  <section class="container hero">
+    <div>
+
+      <h1 class="title reveal" style="transition-delay:.05s">Fractional Salesforce Admin for SMBs</h1>
+      <p class="subtitle reveal" style="transition-delay:.1s">
+        Fix broken lead routing, clean your CRM, and launch low-code automation across Salesforce + HubSpot — without a heavy dev team.
+      </p>
+      <div class="badges reveal" style="transition-delay:.15s">
+        <span class="badge">Low-code automation</span>
+        <span class="badge">HubSpot + Salesforce</span>
+        <span class="badge">Fast, value-first delivery</span>
       </div>
-    </section>
-
-    <section class="section" aria-labelledby="why-how">
-      <div class="grid" id="why-how">
-        <div class="feature reveal">
-          <h3>Why LeadNimble</h3>
-          <p>Certified Salesforce consultant focused on business outcomes. I design simple, supportable solutions—no brittle one-off hacks or over-engineering.</p>
-        </div>
-        <div class="feature reveal">
-          <h3>How We’ll Work</h3>
-          <p><strong>CRM Health Check</strong> to baseline → <strong>quick wins in week one</strong> (routing, dedupe, dashboards) → <strong>steady monthly cadence</strong> as your fractional admin.</p>
-        </div>
-        <div class="feature reveal">
-          <h3>Certifications</h3>
-          <p>Administrator • Advanced Administrator • Platform App Builder • Sales Cloud Consultant</p>
-        </div>
+      <div class="hero-cards">
+        <div class="card reveal" style="transition-delay:.18s"><strong>Lead Routing</strong><br/>Stop leaks with flows & assignment rules that actually work.</div>
+        <div class="card reveal" style="transition-delay:.21s"><strong>Data Clean-Up</strong><br/>Duplicate management, field hygiene, and reporting you can trust.</div>
+        <div class="card reveal" style="transition-delay:.24s"><strong>Automation</strong><br/>Salesforce Flows + HubSpot to cut manual busywork.</div>
       </div>
-    </section>
-
-    <section id="contact" class="section" aria-labelledby="contact-title">
-      <h2 class="reveal" id="contact-title" style="margin-top:0">Get in touch</h2>
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" class="reveal" style="transition-delay:.05s" aria-describedby="contact-help">
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="visually-hidden" aria-hidden="true">
-          <label>Don’t fill this out: <input name="bot-field" tabindex="-1" /></label>
-        </p>
-        <div>
-          <label for="name">Your Name</label>
-          <input id="name" name="name" type="text" autocomplete="name" required />
-        </div>
-        <div>
-          <label for="email">Your Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required inputmode="email" />
-        </div>
-        <div>
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required placeholder="Tell me about your Salesforce goals or current pain points…"></textarea>
-        </div>
-        <div id="contact-help" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <button type="submit" aria-label="Send your message">Send message</button>
-          <a class="badge" href="https://calendly.com/your-handle/15min" target="_blank" rel="noopener">or book a 15-min call →</a>
-        </div>
-      </form>
-    </section>
-  </main>
-
-  <footer role="contentinfo">
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <small>© <span id="year"></span> LeadNimble</small>
-      <small>Boise, Idaho • Remote-friendly</small>
+      <div style="margin-top:18px" class="reveal" style="transition-delay:.26s">
+        <a href="#packages" class="cta">See Packages
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:6px"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    // Current year
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- SERVICES (scroll-through) -->
+  <section id="services" class="container section">
+    <h2>Services</h2>
+    <p class="muted">Browse the highlights — use the arrows or swipe.</p>
+    <div class="hscroll">
+      <div class="controls">
+        <button class="btn" data-left="#srv">←</button>
+        <button class="btn" data-right="#srv">→</button>
+      </div>
+      <div id="srv" class="rail" tabindex="0" aria-label="Services">
+        <article class="pill"><h3>Lead Routing Fixes</h3><p>Assignment rules, queues, round-robin, and SLA alerts so leads never stall.</p></article>
+        <article class="pill"><h3>Data Hygiene</h3><p>Duplicate rules, field audits, data validation, and list segmentation.</p></article>
+        <article class="pill"><h3>Salesforce Flows</h3><p>Approval flows, auto-create tasks, lifecycle tracking — low-code first.</p></article>
+        <article class="pill"><h3>HubSpot Automations</h3><p>Nurtures, scoring, chat routing, and lifecycle stages that reflect reality.</p></article>
+        <article class="pill"><h3>Reporting & Dashboards</h3><p>Pipeline visibility and marketing attribution you can actually use.</p></article>
+        <article class="pill"><h3>Health Check</h3><p>Quick audit + prioritized fixes to unlock near-term wins.</p></article>
+      </div>
+    </div>
+  </section>
 
-    // Respect reduced motion
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  <!-- EXPERIENCE (scroll-through) -->
+  <section id="experience" class="container section">
+    <h2>Experience</h2>
+    <p class="muted">Selected highlights across industries and tools.</p>
+    <div class="hscroll">
+      <div class="controls">
+        <button class="btn" data-left="#exp">←</button>
+        <button class="btn" data-right="#exp">→</button>
+      </div>
+      <div id="exp" class="rail" tabindex="0" aria-label="Experience">
+        <article class="pill"><h3>SMB B2B SaaS</h3><p>Cleaned lead flow, cut response time by 60%, improved MQL→SQL by 18%.</p></article>
+        <article class="pill"><h3>Professional Services</h3><p>Automated intake + scheduling; reduced manual ops by 8–12 hrs/week.</p></article>
+        <article class="pill"><h3>Sales + Marketing Ops</h3><p>Salesforce Sales Cloud + HubSpot handoffs with contact dedupe control.</p></article>
+        <article class="pill"><h3>Tooling</h3><p>Flows, Reports, Validation, HubSpot Workflows, Netlify, n8n.</p></article>
+        <article class="pill"><h3>Certifications</h3><p>Admin • Advanced Admin • App Builder • Sales Cloud Consultant.</p></article>
+      </div>
+    </div>
+  </section>
 
-    // Reveal-on-scroll (progressive enhancement)
-    const reveals = document.querySelectorAll('.reveal');
-    if(reduceMotion){
-      reveals.forEach(el => el.classList.add('on'));
-    } else if ('IntersectionObserver' in window){
-      const observer = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); observer.unobserve(e.target);} });
-      },{threshold:.12});
-      reveals.forEach(el=>observer.observe(el));
-    } else {
-      // Fallback if IntersectionObserver unsupported
-      reveals.forEach(el => el.classList.add('on'));
-    }
-      // Cursor-follow glow for CTA
-  (function(){
-    const btn = document.querySelector('.cta');
-    if(!btn) return;
+  <!-- PACKAGES -->
+  <section id="packages" class="container section">
+    <h2>Packages</h2>
+    <div class="grid">
+      <div class="pkg">
+        <h3>Quick Start CRM Tune-Up</h3>
+        <p class="muted">Up to 5 hours — ideal for fast fixes: lead routing, data clean-up, low-code automation.</p>
+        <p class="price">$150/hr • pre-authorized, captured after delivery</p>
+        <a href="/quick-start.html" class="go">Book Quick Start →</a>
+      </div>
+      <div class="pkg">
+        <h3>Monthly Fractional Admin</h3>
+        <p class="muted">Ongoing support with prioritized queue, reporting, and quarterly roadmap.</p>
+        <a href="/fractional-admin.html" class="go">Explore →</a>
+      </div>
+      <div class="pkg">
+        <h3>Scoped Project</h3>
+        <p class="muted">Milestone-based delivery for migrations, integrations, or bigger initiatives.</p>
+        <a href="/projects.html" class="go">Start a project →</a>
+      </div>
+    </div>
+  </section>
 
-    const set = (x, y) => {
-      btn.style.setProperty('--mx', x + 'px');
-      btn.style.setProperty('--my', y + 'px');
-    };
+  <!-- PROCESS -->
+  <section id="process" class="container section">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div><strong>Discovery (15 min)</strong><br><span class="muted">We align on goals and choose Quick Start vs Project.</span></div></div>
+      <div class="step"><div class="num">2</div><div><strong>Access & Audit</strong><br><span class="muted">Lightweight access, health check, and quick win plan.</span></div></div>
+      <div class="step"><div class="num">3</div><div><strong>Delivery</strong><br><span class="muted">Implement fixes & automation; short updates as we go.</span></div></div>
+      <div class="step"><div class="num">4</div><div><strong>Review & Next steps</strong><br><span class="muted">Confirm outcomes; decide on retainer or further scope.</span></div></div>
+    </div>
+  </section>
 
-    btn.addEventListener('mousemove', (e) => {
-      const r = btn.getBoundingClientRect();
-      set(e.clientX - r.left, e.clientY - r.top);
-    });
+  <!-- TESTIMONIALS (placeholder) -->
+  <section class="container section">
+    <h2>What clients say</h2>
+    <div class="grid">
+      <div class="pkg"><em>“Lead routing was a black box. Dylan fixed it in a week and our reps noticed immediately.”</em><br><span class="muted">— RevOps Lead, B2B SaaS</span></div>
+      <div class="pkg"><em>“We finally trust our reports. The cleanup and validation rules made a huge difference.”</em><br><span class="muted">— COO, Services Firm</span></div>
+    </div>
+  </section>
 
-    // Center the glow on enter/focus; hide on leave/blur
-    btn.addEventListener('mouseenter', () => {
-      const r = btn.getBoundingClientRect();
-      set(r.width / 2, r.height / 2);
-    });
-    btn.addEventListener('focus', () => {
-      const r = btn.getBoundingClientRect();
-      set(r.width / 2, r.height / 2);
-    }, true);
+  <!-- STACK -->
+  <section class="container section">
+    <h2>Tools I work with</h2>
+    <p class="muted">Salesforce Sales Cloud • HubSpot • Netlify • n8n • GA4 • Zapier • Stripe • PayPal</p>
+  </section>
 
-    btn.addEventListener('mouseleave', () => {
-      btn.style.removeProperty('--mx');
-      btn.style.removeProperty('--my');
-    });
-    btn.addEventListener('blur', () => {
-      btn.style.removeProperty('--mx');
-      btn.style.removeProperty('--my');
-    }, true);
-  })();
-  </script>
+  <!-- FAQ -->
+  <section class="container section">
+    <h2>FAQ</h2>
+    <details>
+      <summary>Do you really not charge until work is complete?</summary>
+      <p class="muted">For Quick Start, I place an authorization hold and capture after delivery. If it’s not a fit, I void the hold.</p>
+    </details>
+    <details>
+      <summary>What’s covered in the 5-hour Quick Start?</summary>
+      <p class="muted">Typical wins: lead routing fixes, data hygiene, small automations, and reporting cleanup. Bigger items move to a scoped project.</p>
+    </details>
+    <details>
+      <summary>Can we roll remaining time into a retainer?</summary>
+      <p class="muted">Yes — unused time can credit your first month of fractional admin if started within 30 days.</p>
+    </details>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="container section">
+    <h2>Get in touch</h2>
+    <p class="muted">Prefer to talk first? Book a quick fit call or send a message below.</p>
+    <p><a class="cta" href="https://calendly.com/YOURHANDLE/15min" target="_blank" rel="noopener">Book a 15-min call</a></p>
+
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" class="reveal" style="transition-delay:.05s">
+      <input type="hidden" name="form-name" value="contact" />
+      <p style="display:none"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+      <div><label for="name">Your Name</label><input id="name" name="name" type="text" required></div>
+      <div><label for="email">Your Email</label><input id="email" name="email" type="email" required></div>
+      <div><label for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea></div>
+      <button type="submit">Send message</button>
+    </form>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <small>© <span id="year"></span> LeadNimble — Meridian, Idaho • Remote-friendly</small>
+    <small><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></small>
+  </div>
+</footer>
+
+<script>
+  // Current year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); observer.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal, .card').forEach(el=>observer.observe(el));
+
+  // Horizontal scrollers (buttons)
+  function slide(el, dir){ el.scrollBy({left: dir * (el.clientWidth * 0.8), behavior:'smooth'}); }
+  document.querySelectorAll('[data-left]').forEach(b=>{
+    b.addEventListener('click',()=>{ const rail=document.querySelector(b.dataset.left); slide(rail,-1); });
+  });
+  document.querySelectorAll('[data-right]').forEach(b=>{
+    b.addEventListener('click',()=>{ const rail=document.querySelector(b.dataset.right); slide(rail,1); });
+  });
+</script>
+
 </body>
 </html>
-
