@@ -2,176 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeadNimble — Fractional Salesforce Admin</title>
-  <meta name="description" content="LeadNimble helps SMBs streamline Salesforce + HubSpot with low‑code automation and reliable data." />
-  <link rel="icon" href="/favicon.ico" />
+  <meta name="description" content="Helping SMBs streamline Salesforce + HubSpot with low-code automation and reliable data.">
   <style>
-    :root{
-      --bg-1:#0f172a; /* slate-900 */
-      --bg-2:#111827; /* gray-900 */
-      --primary:#4f46e5; /* indigo-600 */
-      --accent:#06b6d4; /* cyan-500 */
-      --card:#0b1220ee;
-      --text:#e5e7eb; /* gray-200 */
-      --muted:#9ca3af; /* gray-400 */
-      --ring: rgba(79,70,229,.35);
-    }
-    /* Reset */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";color:var(--text);background: radial-gradient(1200px 800px at 10% -10%, rgba(79,70,229,.25), transparent 60%), radial-gradient(900px 600px at 100% 10%, rgba(6,182,212,.25), transparent 55%), linear-gradient(180deg, var(--bg-1), var(--bg-2)); overflow-x:hidden}
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1120px;margin-inline:auto;padding:24px}
-
-    /* Header */
-    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg, rgba(15,23,42,.85), rgba(15,23,42,.65));backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo-wrap{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:conic-gradient(from 180deg, var(--primary), var(--accent));box-shadow:0 8px 30px rgba(79,70,229,.35)}
-    .logo{width:26px;height:26px}
-    .wordmark{font-weight:800;letter-spacing:.3px;background:linear-gradient(90deg, #fff, #c7d2fe 40%, #a5f3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .cta{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;background:linear-gradient(90deg,var(--primary),#7c3aed);box-shadow:0 10px 30px rgba(79,70,229,.4);border:1px solid rgba(255,255,255,.08)}
-    .cta:hover{transform:translateY(-1px)}
-
-    /* Hero */
-    .hero{display:grid;grid-template-columns:1.1fr;align-items:center;min-height:66vh;padding-top:48px;padding-bottom:32px;position:relative}
-    .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 12px;color:var(--muted);background:rgba(255,255,255,.04)}
-    .title{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:16px 0;background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .subtitle{color:#cbd5e1;max-width:780px}
-    .hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-
-    /* Features */
-    .section{padding:56px 0}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-    .feature{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:20px}
-    .feature h3{margin-top:0}
-
-    /* Contact */
-    form{display:grid;gap:12px;background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px}
-    label{font-weight:600}
-    input, textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(2,6,23,.6);color:var(--text)}
-    input:focus, textarea:focus{outline:none;box-shadow:0 0 0 4px var(--ring)}
-    button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;background:linear-gradient(90deg,var(--primary),#7c3aed);color:white;font-weight:700}
-
-    /* Footer */
-    footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0;color:var(--muted)}
-
-    /* Motion */
-    .float{animation:float 6s ease-in-out infinite}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-    .reveal{opacity:0;transform:translateY(12px);transition:all .6s ease}
-    .reveal.on{opacity:1;transform:none}
-
-    /* Responsive tweaks */
-    @media (max-width:640px){
-      .nav .cta{display:none}
-      .hero{min-height:58vh}
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #0d1b2a, #1b263b); color: white; overflow-x: hidden; }
+    header { display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem 1rem; text-align: center; }
+    .logo { display: flex; align-items: center; gap: 0.5rem; }
+    .logo svg { width: 40px; height: 40px; }
+    h1 { font-size: 2.5rem; background: linear-gradient(to right, #00c6ff, #0072ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+    .subtitle { font-size: 1.2rem; margin-top: 0.5rem; color: #b0c4de; }
+    .tagline { margin-top: 1rem; font-size: 1rem; max-width: 600px; color: #d1d5db; text-align: center; line-height: 1.5; }
+    main { max-width: 900px; margin: auto; padding: 2rem 1rem; }
+    .certs { font-size: 1rem; color: #d1d5db; margin: 1.5rem 0 1rem; text-align: center; }
+    .features { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .feature { background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s; }
+    .feature:hover { transform: translateY(-5px); }
+    h2 { text-align: center; margin-bottom: 2rem; }
+    form { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; }
+    label { display: block; margin-top: 0.5rem; }
+    input, textarea { width: 100%; padding: 0.5rem; margin-top: 0.25rem; border: none; border-radius: 4px; }
+    button { background: #0072ff; color: white; padding: 0.7rem 1.2rem; border: none; cursor: pointer; margin-top: 1rem; border-radius: 4px; }
+    footer { text-align: center; padding: 1rem; font-size: 0.9rem; color: #b0c4de; }
   </style>
 </head>
 <body>
   <header>
-    <div class="container nav">
-      <div class="brand">
-        <!-- Inline SVG logo (LN monogram) -->
-        <div class="logo-wrap float" aria-hidden="true">
-          <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LeadNimble logo">
-            <defs>
-              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#a5f3fc"/>
-                <stop offset="100%" stop-color="#6366f1"/>
-              </linearGradient>
-            </defs>
-            <rect x="6" y="6" width="52" height="52" rx="12" stroke="url(#g)" stroke-width="4"/>
-            <path d="M18 20v24h10" stroke="url(#g)" stroke-width="5" stroke-linecap="round"/>
-            <path d="M36 44V20l10 10" stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="wordmark" style="font-size:1.25rem">LeadNimble</div>
-      </div>
-      <a class="cta" href="#contact" aria-label="Book a call">
-        <span>Book a 15‑min fit call</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-      </a>
+    <div class="logo">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48" stroke="#00c6ff" stroke-width="4" fill="none"/><text x="50" y="57" text-anchor="middle" font-size="40" fill="#00c6ff" font-family="Arial">LN</text></svg>
+      <h1>LeadNimble</h1>
     </div>
+    <p class="subtitle">Fractional Salesforce Admin & Marketing Automation Specialist</p>
+    <p class="tagline">Empowering small and midsize businesses to unlock the full potential of Salesforce and HubSpot through tailored solutions, streamlined processes, and scalable automation strategies.</p>
+    <p class="certs">Admin • Adv Admin • App Builder • Sales Cloud Consultant</p>
   </header>
-
-  <main class="container">
-    <section class="hero">
-      <div>
-        <span class="badge reveal">Admin • Adv Admin • App Builder • Sales Cloud Consultant</span>
-        <h1 class="title reveal" style="transition-delay:.05s">Fractional Salesforce Admin for SMBs</h1>
-        <p class="subtitle reveal" style="transition-delay:.1s">Fix broken lead routing, clean your CRM, and launch low‑code automation across Salesforce + HubSpot — without a heavy dev team.</p>
-        <div class="hero-cards">
-          <div class="card reveal" style="transition-delay:.15s"><strong>Lead Routing</strong><br/>Stop leaks with flows & assignment rules that actually work.</div>
-          <div class="card reveal" style="transition-delay:.2s"><strong>Data Clean‑Up</strong><br/>Duplicate management, field hygiene, and reporting you can trust.</div>
-          <div class="card reveal" style="transition-delay:.25s"><strong>Low‑Code Automation</strong><br/>Salesforce Flows + HubSpot to cut manual busywork.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="grid">
-        <div class="feature reveal">
-          <h3>Why LeadNimble?</h3>
-          <p>5+ years across admin + consulting. I ship practical, business‑first systems — not science projects.</p>
-        </div>
-        <div class="feature reveal">
-          <h3>How I Work</h3>
-          <p>Start with a CRM Health Check → quick wins in week 1 → optional monthly fractional admin.</p>
-        </div>
-        <div class="feature reveal">
-          <h3>Certs</h3>
-          <p>Admin • Advanced Admin • Platform App Builder • Sales Cloud Consultant.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <h2 class="reveal" style="margin-top:0">Get in touch</h2>
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" class="reveal" style="transition-delay:.05s">
-        <input type="hidden" name="form-name" value="contact" />
-        <p style="display:none">
-          <label>Don’t fill this out: <input name="bot-field" /></label>
-        </p>
-        <div>
-          <label for="name">Your Name</label>
-          <input id="name" name="name" type="text" required />
-        </div>
-        <div>
-          <label for="email">Your Email</label>
-          <input id="email" name="email" type="email" required />
-        </div>
-        <div>
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
-        </div>
-        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <button type="submit">Send message</button>
-          <a class="badge" href="https://calendly.com/your-handle/15min" target="_blank" rel="noopener">or book a 15‑min call →</a>
-        </div>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <small>© <span id="year"></span> LeadNimble</small>
-      <small>Meridian, Idaho • Remote‑friendly</small>
+  <main>
+    <h2>Let’s streamline your CRM</h2>
+    <div class="features">
+      <div class="feature">Fix broken lead routing</div>
+      <div class="feature">Clean, reliable CRM data</div>
+      <div class="feature">Low-code automation across Salesforce + HubSpot</div>
     </div>
+    <h2>Contact Me</h2>
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+      <input type="hidden" name="form-name" value="contact" />
+      <p style="display:none"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+      <label>Your Name:<input type="text" name="name" required></label>
+      <label>Your Email:<input type="email" name="email" required></label>
+      <label>Message:<textarea name="message" rows="5" required></textarea></label>
+      <button type="submit">Send</button>
+    </form>
+  </main>
+  <footer>
+    <p>© 2025 LeadNimble</p>
   </footer>
-
-  <script>
-    // Current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Reveal-on-scroll
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); observer.unobserve(e.target);} });
-    },{threshold:.12});
-    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-  </script>
 </body>
 </html>
