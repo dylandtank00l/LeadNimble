@@ -69,6 +69,34 @@
       .nav .cta{display:none}
       .hero{min-height:58vh}
     }
+/* Supertitle above the badge */
+.supertitle{
+  font-size: clamp(42px, 8.5vw, 72px); /* larger than .title (max 56px) */
+  line-height: 1.02;
+  margin: 6px 0 10px;
+  font-weight: 900;
+  letter-spacing: .2px;
+  background: linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 6px 28px rgba(79,70,229,.25);
+  background-size: 200% 100%;
+  animation: shimmer 8s ease-in-out infinite, rise-in .7s ease both;
+}
+
+/* Center the hero’s first column contents without affecting layout */
+.hero .hero-inner{ text-align:center; margin-inline:auto; }
+
+/* Subtle gradient motion + gentle rise */
+@keyframes shimmer{
+  0%,100%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+}
+@keyframes rise-in{
+  from{ opacity:0; transform: translateY(10px) scale(.98); }
+  to{ opacity:1; transform: none; }
+}
   </style>
 </head>
 <body>
@@ -99,11 +127,9 @@
   </header>
 
   <main class="container">
-    <section class="hero">
-  <div>
-    <div class="reveal" style="font-size:1.1rem;font-weight:600;transition-delay:.02s">
-      LeadNimble Consulting
-    </div>
+   <section class="hero">
+  <div class="hero-inner">
+    <h2 class="supertitle reveal" style="transition-delay:.0s">LeadNimble Consulting</h2>
       <div>
         <span class="badge reveal">Admin • Adv Admin • App Builder • Sales Cloud Consultant</span>
         <h1 class="title reveal" style="transition-delay:.05s">Fractional Salesforce Admin for SMBs</h1>
@@ -180,4 +206,5 @@
 </body>
 </html>
  
+
 
