@@ -35,7 +35,7 @@
     .cta:hover{transform:translateY(-1px)}
 
     /* Hero */
-    .hero{display:grid;grid-template-columns:1.1fr;align-items:center;min-height:66vh;padding-top:4px;padding-bottom:32px;position:relative}
+    .hero{display:grid;grid-template-columns:1.1fr;align-items:center;min-height:66vh;padding-top:48px;padding-bottom:32px;position:relative}
     .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 12px;color:var(--muted);background:rgba(255,255,255,.04)}
     .title{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:16px 0;background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
     .subtitle{color:#cbd5e1;max-width:780px}
@@ -71,7 +71,6 @@
     }
 /* Supertitle above the badge */
 .supertitle{
-margin-top: -10px; /* adjust as needed */
   font-size: clamp(42px, 8.5vw, 72px); /* larger than .title (max 56px) */
   line-height: 1.02;
   margin: 6px 0 10px;
@@ -98,6 +97,49 @@ margin-top: -10px; /* adjust as needed */
   from{ opacity:0; transform: translateY(10px) scale(.98); }
   to{ opacity:1; transform: none; }
 }
+/* === Compact spacing + lift supertitle (overrides) === */
+.hero{
+  min-height:58vh;         /* was 66vh */
+  padding-top:28px;        /* was 48px */
+  padding-bottom:20px;     /* was 32px */
+}
+.supertitle{
+  margin:-10px 0 6px;      /* lift upward, slightly tighter below */
+}
+.title{
+  margin:12px 0;           /* a bit tighter than 16px */
+}
+.subtitle{
+  margin-top:8px;          /* reduce blank space under H1 */
+}
+.hero-cards{
+  gap:14px;                /* was 16px */
+  margin-top:18px;         /* was 28px */
+}
+.section{
+  padding:40px 0;          /* was 56px */
+}
+.grid{
+  gap:16px;                /* was 20px */
+}
+.feature{
+  padding:18px;            /* was 20px */
+}
+form{
+  gap:10px;                /* was 12px */
+  padding:16px;            /* was 20px */
+}
+footer{
+  padding:20px 0;          /* was 28px */
+}
+
+/* Mobile tweaks keep things snug on small screens */
+@media (max-width:640px){
+  .hero{ min-height:52vh; padding-top:22px; padding-bottom:16px; }
+  .supertitle{ margin:-8px 0 6px; }
+  .section{ padding:32px 0; }
+}
+
   </style>
 </head>
 <body>
@@ -207,6 +249,4 @@ margin-top: -10px; /* adjust as needed */
 </body>
 </html>
  
-
-
 
