@@ -103,6 +103,23 @@
 #why-how {
   margin-top: -100px; /* adjust to taste */
 }
+#contact {
+  position: fixed;
+  bottom: 20px;       /* padding from the very bottom */
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background: var(--bg-2); /* match site theme */
+  padding: var(--s-4);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+}
+
+/* Keep form readable on large screens */
+#contact .container,
+#contact form {
+  max-width: 700px;
+  margin: 0 auto;
+}
     /* Supertitle */
     .supertitle{
       font-size: clamp(42px, 8.5vw, 72px);
