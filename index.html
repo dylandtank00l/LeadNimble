@@ -166,8 +166,13 @@ background-attachment: fixed;
     @keyframes rise-in{from{ opacity:0; transform: translateY(10px) scale(.98);}to{ opacity:1; transform: none;}}
 
     /* Responsive tweaks */
-    @media (max-width: 640px){
-      .nav .cta{display:none}
+@media (max-width: 640px){
+  .nav .cta{
+    display:inline-flex;       /* show it */
+    padding:10px 14px;         /* slightly smaller */
+    font-size:.95rem;
+  }
+}
       .hero{min-height:56vh;padding-top:var(--s-5);padding-bottom:var(--s-4)}
       .section{padding:var(--s-6) 0}
       /* Prevent 100vw overflow hack on very small screens */
