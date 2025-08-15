@@ -55,6 +55,11 @@ body {
 
   /* Hero */
   .hero{min-height:66vh;display:grid;align-items:center}
+  .hero {
+  min-height: auto;
+  padding-bottom: 120px;
+}
+
   .title{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:12px 0;
     background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent}
@@ -68,7 +73,11 @@ body {
     border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
 
   /* Sections */
-  .section{padding:56px 0}
+  .section{56px 0}
+    /* Override just for the Services section */
+  #services.section {
+    padding-top: 20px; /* tighten only the top */
+  }
   .section h2{margin:0 0 12px 0;font-size:1.6rem}
   .muted{color:var(--muted)}
 
@@ -97,7 +106,15 @@ body {
   -webkit-overflow-scrolling: touch;   /* smooth on iOS */
   scrollbar-gutter: stable both-edges; /* avoids layout shifts */
 }
-
+.card.glow::before {
+  background:
+    radial-gradient(
+      140px circle at var(--x, 50%) var(--y, 50%),
+      rgba(99,102,241,0.35) 0%,   /* slightly dimmer purple */
+      rgba(6,182,212,0.28) 35%,  /* slightly dimmer teal */
+      transparent 65%
+    );
+}
 /* Firefox */
 .rail { scrollbar-width: none; }
 
@@ -198,12 +215,23 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .glow, .glow::before { transition: none; }
 }
+.hero-cards .card {
+  transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  cursor: default; /* or pointer if clickable later */
+}
+
+.hero-cards .card:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+}
   /* Motion */
   .float{animation:float 6s ease-in-out infinite}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   .reveal{opacity:0;transform:translateY(14px);transition:all .6s ease}
   .reveal.on{opacity:1;transform:none}
   @media (max-width:640px){ .nav .navlinks{display:none} }
+
 </style>
 </head>
 <body>
@@ -440,10 +468,15 @@ document.querySelectorAll('.num').forEach(el => {
     el.classList.add('glow');
     attachGlow(el);
   });
+document.querySelectorAll('.hero-cards .card').forEach(el => {
+  el.classList.add('glow');
+  attachGlow(el);
+});
 </script>
 
 </body>
 </html>
+
 
 
 
