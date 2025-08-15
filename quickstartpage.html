@@ -440,12 +440,23 @@ header.gone { transform: translateY(-110%); opacity: 0; }
     minus.disabled = (val<=MIN);
     plus.disabled  = (val>=MAX);
 
-   if(val >= 10){
+if (val >= 10) {
+  included.innerHTML = 
+    `<span class="glow-text">
+      Pro Quick Start: Full Quick Start set <em>(Lead routing fixes, custom flows, assignment rules, queues setup, web-to-lead configuration, small data jobs, validation rules and SLA alerts with branded HTML email templates, reporting)</em> 
+      <strong>+ priority kickoff scheduling + 30-min follow-up session</strong>.
+    </span>`;
+} else if (val >= 6) {
   included.innerHTML =
-    `<span class="glow-text">Includes everything in the Quick Start set: Lead Routing Fixes, custom flows, assignment rules, queues setup, web-to-lead configuration, small data jobs, validation rules and SLA alerts with branded HTML email templates, and reporting.</span>`;
+    `<span class="glow-text">
+      Core Quick Start: Everything from Starter <em>(basic health check, data clean-up & import, sales workflow optimization)</em> 
+      <strong>+ lead routing fixes, custom flows, assignment rules, queues setup, web-to-lead configuration, small data jobs, validation rules and SLA alerts with branded HTML email templates, and reporting.</strong>
+    </span>`;
 } else {
   included.innerHTML =
-    "Typically covers a basic health check, data job, and custom workflow optimization.";
+    `<span class="glow-text">
+      Starter Quick Start: Basic health check & org review, raw data clean-up & light import, and sales workflow optimization fundamentals.
+    </span>`;
 }
 
     // Update checkout summary
