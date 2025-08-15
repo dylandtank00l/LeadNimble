@@ -456,8 +456,15 @@ html, body {
     });
     el.addEventListener('pointerleave', () => {
       // Optional: center fallback when cursor leaves
-      el.style.removeProperty('--x');
-      el.style.removeProperty('--y');
+document.querySelectorAll('.hero-cards .card').forEach(el => {
+  el.classList.add('glow');
+  el.addEventListener('pointermove', (e) => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--x', (e.clientX - r.left) + 'px');
+    el.style.setProperty('--y', (e.clientY - r.top) + 'px');
+  });
+  // No reset on leave — just let opacity transition hide it
+});
     });
   }
 // Also apply glow to the numbered steps
