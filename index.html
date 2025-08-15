@@ -133,7 +133,71 @@ body {
 
   /* Footer */
   footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0;color:var(--muted)}
+  
+/* Cursor-follow glow for buttons */
+.glow {
+  position: relative;
+  isolation: isolate;            /* keeps the glow behind text only for this element */
+  transition: transform .06s ease;
+}
+.glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;                   /* slight overscan so glow isn’t clipped */
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;                    /* shown on hover */
+  transition: opacity .18s ease;
+  background:
+    radial-gradient(
+      140px circle at var(--x, 50%) var(--y, 50%),
+      rgba(99,102,241,.55) 0%,
+      rgba(6,182,212,.45) 35%,
+      transparent 65%
+    );
+  filter: blur(14px);            /* soft ambient look */
+}
+.glow:hover::before { opacity: .95; }
+.glow:active { transform: translateY(1px); } /* subtle press feedback */
 
+/* optional: a faint outline to “hold” the light */
+.glow {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08) inset,
+    0 10px 28px rgba(0,0,0,.25);
+}
+/* Glow for numbered circles */
+.num.glow {
+  position: relative;
+  isolation: isolate;
+  transition: transform .06s ease;
+}
+.num.glow::before {
+  content: "";
+  position: absolute;
+  inset: -4px; /* extra space so glow isn't clipped */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity .18s ease;
+  background:
+    radial-gradient(
+      100px circle at var(--x, 50%) var(--y, 50%),
+      rgba(99,102,241,.55) 0%,
+      rgba(6,182,212,.45) 35%,
+      transparent 65%
+    );
+  filter: blur(14px);
+}
+.num.glow:hover::before {
+  opacity: .95;
+}
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glow, .glow::before { transition: none; }
+}
   /* Motion */
   .float{animation:float 6s ease-in-out infinite}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
@@ -352,9 +416,36 @@ body {
     b.addEventListener('click',()=>{ const rail=document.querySelector(b.dataset.right); slide(rail,1); });
   });
 </script>
+<script>
+  // Attach cursor-follow glow to matching buttons
+  function attachGlow(el) {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--x', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--y', (e.clientY - r.top) + 'px');
+    });
+    el.addEventListener('pointerleave', () => {
+      // Optional: center fallback when cursor leaves
+      el.style.removeProperty('--x');
+      el.style.removeProperty('--y');
+    });
+  }
+// Also apply glow to the numbered steps
+document.querySelectorAll('.num').forEach(el => {
+  el.classList.add('glow');
+  attachGlow(el);
+});
+  // Target your buttons: Contact (cta), See Packages (cta),
+  // Book Quick Start / Explore / Start a project (go)
+  document.querySelectorAll('a.cta, a.go').forEach(el => {
+    el.classList.add('glow');
+    attachGlow(el);
+  });
+</script>
 
 </body>
 </html>
+
 
 
 
