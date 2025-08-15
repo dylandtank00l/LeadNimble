@@ -52,6 +52,9 @@ body{
 html, body {
   background-color: #0f172a; /* match your --bg-1 or use pure black #000 */
 }
+header { transition: padding .25s ease, background-color .25s ease, transform .28s ease, opacity .28s ease; }
+header.gone { transform: translateY(-110%); opacity: 0; }
+
   /* Header */
   header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(10px);
     background:linear-gradient(180deg, rgba(15,23,42,.85), rgba(17,24,39,.6));
@@ -94,7 +97,17 @@ html, body {
   .hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:26px}
   .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
     border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+/* smooth size change */
+header { transition: padding .25s ease, background-color .25s ease; }
 
+/* starting size */
+header .logo-wrap { transition: transform .25s ease; }
+header .wordmark { transition: font-size .25s ease, letter-spacing .25s ease; }
+
+/* shrunken state */
+header.scrolled { padding: 8px 0; background: rgba(15,23,42,.92); }
+header.scrolled .logo-wrap { transform: scale(.85); }
+header.scrolled .wordmark { font-size: 1rem; letter-spacing: .1px; }
   /* Sections */
 .section { padding: 30px 0; }
     /* Override just for the Services section */
@@ -528,10 +541,48 @@ document.querySelectorAll('.hero-cards .card').forEach(el => {
   attachGlow(el);
 });
 </script>
+<script>
+  // shrink header after 80px of scroll
+  (function () {
+    const header = document.querySelector('header');
+    const THRESHOLD = 80;
+    const onScroll = () => {
+      if (window.scrollY > THRESHOLD) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+<script>
+  (function () {
+    const header = document.querySelector('header');
+    const SHRINK_AT = 80;
+    const BEHAVIOR_START = 400; // header begins “smart hide” after this point
+    let lastY = window.scrollY;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const scrollingDown = y > lastY;
+
+      header.classList.toggle('scrolled', y > SHRINK_AT);
+
+      if (y > BEHAVIOR_START && scrollingDown) {
+        header.classList.add('gone');     // hide while going down
+      } else {
+        header.classList.remove('gone');  // show when going up or above the start
+      }
+
+      lastY = y;
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
 
 </body>
 </html>
-
 
 
 
