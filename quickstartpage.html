@@ -81,6 +81,59 @@ header.gone { transform: translateY(-110%); opacity: 0; }
     background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent}
   .subtitle{color:#cbd5e1;max-width:780px}
+/* --- Sliding request → checkout card --- */
+.flow-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: transparent;
+}
+.panes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 200%;
+  transition: transform .42s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+.flow-card.show-checkout .panes { transform: translateX(-50%); }
+
+.pane {
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+
+/* “Stripe” summary look */
+.stripe-card {
+  display: grid;
+  gap: 14px;
+  max-width: 560px;
+}
+.stripe-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.badge {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px; padding:6px 12px; color:#9ca3af;
+  background:rgba(255,255,255,.04);
+}
+.summary-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 12px 0; border-bottom:1px solid rgba(255,255,255,.06);
+}
+.summary-row:last-child { border-bottom: 0; }
+.total {
+  font-weight: 800; font-size: 1.25rem;
+  background: linear-gradient(90deg,#fff,#e0e7ff);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.pay-actions { display:flex; gap:12px; flex-wrap:wrap; }
 
   /* Card */
   .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
@@ -161,11 +214,12 @@ header.gone { transform: translateY(-110%); opacity: 0; }
 </div>
     </div>
     <nav class="navlinks">
-      <a href="#services">Services</a>
-      <a href="#experience">Experience</a>
-      <a href="#packages">Packages</a>
-      <a href="#process">Process</a>
-      <a href="#contact" class="cta">Contact</a>
+      <a href="https://harmonious-taffy-d154e3.netlify.app/#services">Services</a>
+      <a href="https://harmonious-taffy-d154e3.netlify.app/#experience">Experience</a>
+      <a href="https://harmonious-taffy-d154e3.netlify.app/#packages">Packages</a>
+      <a href="https://harmonious-taffy-d154e3.netlify.app/#process">Process</a>
+      <a href="https://harmonious-taffy-d154e3.netlify.app/#contact" class="cta glow">Contact</a>
+
     </nav>
   </div>
 </header>
@@ -176,25 +230,72 @@ header.gone { transform: translateY(-110%); opacity: 0; }
     <p class="subtitle">Pick the number of hours and get rapid, value-first delivery — no heavy dev team required.</p>
   </section>
 
-  <section class="container section">
-    <div class="card">
-      <div class="selector" aria-label="Choose Quick Start hours">
-        <div class="control glow" id="hours-control">
-          <button id="minus" class="glow" aria-label="Decrease hours">–</button>
-          <output id="hours" for="minus plus" aria-live="polite" aria-atomic="true">3 hrs</output>
-          <button id="plus" class="glow" aria-label="Increase hours">+</button>
+ <section class="container section">
+  <div class="flow-card" id="qs-flow">
+    <div class="panes" id="qs-panes">
+
+      <!-- PANE 1: hours selector -->
+      <div class="pane">
+        <div class="selector" aria-label="Choose Quick Start hours">
+          <div class="control glow" id="hours-control">
+            <button id="minus" class="glow" aria-label="Decrease hours">–</button>
+            <output id="hours" for="minus plus" aria-live="polite" aria-atomic="true">3 hrs</output>
+            <button id="plus" class="glow" aria-label="Increase hours">+</button>
+          </div>
+          <a href="#compare" class="btn-ghost glow">See what’s included ↓</a>
         </div>
-        <a href="#compare" class="btn-ghost glow">See what’s included ↓</a>
+
+        <p class="subtext" id="included">
+          Typically covers a basic health check, raw data cleaning & import, and sales workflow optimization.
+        </p>
+
+        <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+          <button id="requestBtn" class="btn-primary glow">Request this Quick Start →</button>
+          <a href="/#packages" class="btn-ghost glow">Back to packages</a>
+        </div>
       </div>
-      <p class="subtext" id="included">
-        Typically covers a basic health check, raw data cleaning & import, and sales workflow optimization.
-      </p>
-      <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
-        <a href="/#contact" class="btn-primary glow">Request this Quick Start →</a>
-        <a href="/#packages" class="btn-ghost glow">Back to packages</a>
+
+      <!-- PANE 2: stripe-style summary -->
+      <div class="pane">
+        <div class="stripe-card">
+          <div class="stripe-header">
+            <span class="badge">LeadNimble • Quick Start</span>
+            <span class="badge">Secure checkout</span>
+          </div>
+
+          <div class="summary-row">
+            <div>Hours selected</div>
+            <div id="sum-hours"><strong>3</strong> hrs</div>
+          </div>
+          <div class="summary-row">
+            <div>Rate</div>
+            <div>$70/hr</div>
+          </div>
+          <div class="summary-row">
+            <div class="total">Total</div>
+            <div class="total" id="sum-total">$210.00</div>
+          </div>
+
+          <div class="subtext">
+            You’re authorizing work up to the selected hours. We only capture payment after successful delivery.
+          </div>
+
+          <div class="pay-actions">
+            <button class="btn-primary glow" id="payStripe">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 auto">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+              Pay with Stripe
+            </button>
+            <button class="btn-ghost glow" id="backEdit">← Edit hours</button>
+          </div>
+        </div>
       </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
 
   <section id="compare" class="container section">
     <h2 style="margin:0 0 12px 0;font-size:1.6rem">Quick Start vs Scoped Project</h2>
@@ -273,12 +374,11 @@ header.gone { transform: translateY(-110%); opacity: 0; }
     <small><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></small>
   </div>
 </footer>
-
 <script>
-  // footer year
+  // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Glow follow
+  // Glow follow for anything with .glow
   function attachGlow(el){
     el.addEventListener('pointermove', (e)=>{
       const r = el.getBoundingClientRect();
@@ -286,35 +386,67 @@ header.gone { transform: translateY(-110%); opacity: 0; }
       el.style.setProperty('--y', (e.clientY - r.top) + 'px');
     });
     el.addEventListener('pointerleave', ()=>{
-      el.style.removeProperty('--x'); el.style.removeProperty('--y');
     });
   }
   document.querySelectorAll('.glow').forEach(attachGlow);
 
-  // Hours selector logic (3..10)
-  const min=3,max=10;
-  const hoursEl = document.getElementById('hours');
-  const minus = document.getElementById('minus');
-  const plus  = document.getElementById('plus');
-  const included = document.getElementById('included');
+  // Hours selector + sliding flow
+  const RATE = 70, MIN=3, MAX=10;
   let val = 3;
 
+  const hoursEl = document.getElementById('hours');
+  const minus   = document.getElementById('minus');
+  const plus    = document.getElementById('plus');
+  const included= document.getElementById('included');
+
+  const flow    = document.getElementById('qs-flow');
+  const request = document.getElementById('requestBtn');
+  const back    = document.getElementById('backEdit');
+  const sumHours= document.getElementById('sum-hours');
+  const sumTotal= document.getElementById('sum-total');
+  const payBtn  = document.getElementById('payStripe');
+
+  function fmtUSD(n){ return n.toLocaleString(undefined,{style:'currency',currency:'USD'}); }
+
   function render(){
-    hoursEl.textContent = val + ' ' + (val===1?'hr':'hrs');
-    // update copy: expanded list at 6+
+    hoursEl.textContent = `${val} ${val===1?'hr':'hrs'}`;
+    minus.disabled = (val<=MIN);
+    plus.disabled  = (val>=MAX);
+
     if(val >= 6){
       included.innerHTML =
         "Includes everything in the basic set, plus: Lead Routing Fixes, custom flows, assignment rules, queues setup, web-to-lead configuration, small data jobs, validation rules and SLA alerts with branded HTML email templates, and reporting.";
-    }else{
+    } else {
       included.innerHTML =
         "Typically covers a basic health check, raw data cleaning & import, and sales workflow optimization.";
     }
-    minus.disabled = (val<=min);
-    plus.disabled  = (val>=max);
+
+    // Update checkout summary
+    sumHours.innerHTML = `<strong>${val}</strong> ${val===1?'hr':'hrs'}`;
+    sumTotal.textContent = fmtUSD(val * RATE);
   }
-  minus.addEventListener('click', ()=>{ if(val>min){ val--; render(); }});
-  plus.addEventListener('click',  ()=>{ if(val<max){ val++; render(); }});
-  render(); // init
+
+  minus.addEventListener('click', ()=>{ if(val>MIN){ val--; render(); }});
+  plus.addEventListener('click',  ()=>{ if(val<MAX){ val++; render(); }});
+
+  // slide to checkout
+  request.addEventListener('click', ()=>{
+    render(); // ensure latest value
+    flow.classList.add('show-checkout');
+  });
+
+  // slide back to edit
+  back.addEventListener('click', ()=>{
+    flow.classList.remove('show-checkout');
+  });
+
+  // demo-only: pretend Stripe
+  payBtn.addEventListener('click', ()=>{
+    alert(`This would open Stripe for ${fmtUSD(val*RATE)} (Quick Start, ${val} hrs).`);
+  });
+
+  render();
 </script>
+
 </body>
 </html>
