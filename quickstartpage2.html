@@ -92,13 +92,28 @@ header.gone { transform: translateY(-110%); opacity: 0; }
 .panes {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 2000%;
+  width: 200%;
   transition: transform .42s cubic-bezier(.22,.61,.36,1);
   will-change: transform;
 }
 .flow-card.show-checkout .panes { transform: translateX(-50%); }
 
+.pane {
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+.flow-card .pane {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
 
+.flow-card {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
 /* “Stripe” summary look */
 .stripe-card {
   display: grid;
@@ -226,7 +241,7 @@ header.gone { transform: translateY(-110%); opacity: 0; }
   </section>
 
  <section class="container section">
-
+  <div class="flow-card" id="qs-flow">
     <div class="panes" id="qs-panes">
 
       <!-- PANE 1: hours selector -->
