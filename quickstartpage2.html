@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quick Start — LeadNimble</title>
+<link rel="icon" href="/favicon.ico">
+<meta name="description" content="Book a Quick Start with LeadNimble — fast Salesforce fixes, clean data, and low-code automation.">
+<style>
+  :root{
+    --bg-1:#0f172a; --bg-2:#111827; --card:#0b1220ee;
+    --text:#e5e7eb; --muted:#9ca3af;
+    --primary:#4f46e5; --accent:#06b6d4; --ok:#22c55e; --warn:#f59e0b;
+    --ring: rgba(79,70,229,.35);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    background: linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    overflow-x:hidden; min-height:100svh;
+  }
+  html, body { background-color:#0f172a; }
+
+  /* background lights */
+  body::before{
+    content:""; position:fixed; inset:-12% -12% -12% -12%; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(120vw 200vh at 10% -10%, rgba(79,70,229,.25) 0%, rgba(79,70,229,0) 80%),
+      radial-gradient(110vw 220vh at 100% -10%, rgba(6,182,212,.10) 0%, rgba(6,182,212,.04) 55%, #0f172a 72%);
+    background-repeat:no-repeat,no-repeat;
+    background-position:center top, right 10% top;
+  }
+  @media (orientation:landscape) and (max-height:520px){
+    body::before{ inset:-20% -16%; }
+  }
+
+  .container{max-width:1140px;margin-inline:auto;padding:20px}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(10px);
+    background:linear-gradient(180deg, rgba(15,23,42,.85), rgba(17,24,39,.6));
+    border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo-wrap{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;
+    background:conic-gradient(from 180deg,var(--primary),var(--accent)); box-shadow:0 8px 30px rgba(79,70,229,.35)}
+  .logo{width:26px;height:26px}
+  .wordmark{font-weight:800;letter-spacing:.2px;font-size:1.15rem;
+    background:linear-gradient(90deg,#fff,#c7d2fe 40%,#a5f3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .navlinks{display:flex;gap:16px;flex-wrap:wrap}
+  .navlinks a{padding:10px 12px;border-radius:10px;border:1px solid transparent}
+  .navlinks a:hover{border-color:rgba(255,255,255,.1)}
+  .cta{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;
+    background:linear-gradient(90deg,var(--primary),#7c3aed);box-shadow:0 10px 30px rgba(79,70,229,.4);
+    border:1px solid rgba(255,255,255,.08)}
+
+  /* Hero */
+  .hero{padding:64px 0 20px}
+  .title{font-size:clamp(32px,5.5vw,52px);line-height:1.06;margin:8px 0 6px;
+    background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .subtitle{color:#cbd5e1;max-width:780px}
+
+  /* Card + sliding panes */
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    border:1px solid rgba(255,255,255,.08);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.2);
+    overflow:hidden; /* clip during slide */
+    transition:height .35s ease}
+  .panes{position:relative}
+  .panes-inner{
+    display:flex; width:200%; transform:translateX(var(--tx,0%));
+    transition:transform .45s cubic-bezier(.22,.61,.36,1); will-change:transform;
+  }
+  .pane{min-width:50%; padding:20px}
+
+  /* Hours selector */
+  .selector{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .selector .control{
+    display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:10px;
+  }
+  .selector button{
+    width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;font-size:18px;line-height:0;
+  }
+  .selector output{
+    min-width:72px;text-align:center;font-weight:800;font-size:1.25rem;
+    background:linear-gradient(90deg,#fff,#e0e7ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtext{color:var(--muted);margin-top:10px}
+
+  /* Checkout styles */
+  .summary{display:grid;gap:10px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .row small{color:var(--muted)}
+  .total{font-weight:800;font-size:1.25rem}
+  .badge{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.12);
+    border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.04);color:var(--muted)}
+  .hr{height:1px;background:rgba(255,255,255,.08);margin:10px 0}
+
+  /* Buttons / glow */
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;
+    background:linear-gradient(90deg,var(--primary),#7c3aed);border:0;color:white;font-weight:700;cursor:pointer}
+  .btn-ghost{display:inline-flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--text)}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+
+  .glow{position:relative;isolation:isolate;transition:transform .06s ease;box-shadow:
+      0 0 0 1px rgba(255,255,255,.08) inset, 0 10px 28px rgba(0,0,0,.25)}
+  .glow::before{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;z-index:-1;opacity:0;
+    transition:opacity .18s ease;background:
+      radial-gradient(140px circle at var(--x,50%) var(--y,50%), rgba(99,102,241,.55) 0%, rgba(6,182,212,.45) 35%, transparent 65%);
+    filter:blur(14px)}
+  .glow:hover::before{opacity:.95}
+  .glow:active{transform:translateY(1px)}
+
+  .section{padding:26px 0}
+  footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0;color:var(--muted)}
+  @media (max-width:640px){ .nav .navlinks{display:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <div class="logo-wrap" aria-hidden="true">
+        <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LeadNimble logo">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#a5f3fc"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs>
+          <rect x="6" y="6" width="52" height="52" rx="12" stroke="url(#g)" stroke-width="4"/>
+          <path d="M16.5 20v24h12" stroke="url(#g)" stroke-width="5" stroke-linecap="round"/>
+          <path d="M36 44V20l12 24V20" stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="wordmark"><a href="/">LeadNimble</a></div>
+    </div>
+    <nav class="navlinks">
+      <a href="/#services">Services</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#packages">Packages</a>
+      <a href="/#process">Process</a>
+      <!-- Contact highlights with same glow -->
+      <a href="/#contact" class="cta glow">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="container hero">
+    <h1 class="title">Quick Start</h1>
+    <p class="subtitle">Pick the number of hours and get rapid, value-first delivery — no heavy dev team required.</p>
+  </section>
+
+  <section class="container section">
+    <!-- Sliding card -->
+    <div class="card" id="slide-card">
+      <div class="panes">
+        <div class="panes-inner" id="panes" style="--tx:0%">
+          <!-- Pane 1: selector -->
+          <div class="pane" id="pane-config">
+            <div class="selector" aria-label="Choose Quick Start hours">
+              <div class="control glow" id="hours-control">
+                <button id="minus" class="glow" aria-label="Decrease hours">–</button>
+                <output id="hours" for="minus plus" aria-live="polite" aria-atomic="true">3 hrs</output>
+                <button id="plus" class="glow" aria-label="Increase hours">+</button>
+              </div>
+              <a href="#compare" class="btn-ghost glow">See what’s included ↓</a>
+            </div>
+            <p class="subtext" id="included">
+              Typically covers a basic health check, raw data cleaning & import, and sales workflow optimization.
+            </p>
+            <div class="actions">
+              <button id="to-checkout" class="btn-primary glow">Request this Quick Start →</button>
+              <a href="/#packages" class="btn-ghost glow">Back to packages</a>
+            </div>
+          </div>
+
+          <!-- Pane 2: checkout -->
+          <div class="pane" id="pane-checkout" aria-hidden="true">
+            <h3 style="margin:0 0 10px 0">Checkout — Quick Start</h3>
+            <div class="summary">
+              <div class="row"><small>Selected hours</small><div id="sumHours">3 hrs</div></div>
+              <div class="row"><small>Rate</small><div>$70/hr</div></div>
+              <div class="hr"></div>
+              <div class="row total"><div>Total</div><div id="sumTotal">$210</div></div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <span class="badge">Secure checkout</span>
+              <span class="badge">Fast start</span>
+              <span class="badge">Value-first delivery</span>
+            </div>
+            <div class="actions">
+              <!-- Replace href with your Stripe Checkout URL when ready -->
+              <a href="#" class="btn-primary glow">Proceed to Stripe →</a>
+              <button id="back" class="btn-ghost glow" type="button">← Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison table (unchanged) -->
+  <section id="compare" class="container section">
+    <h2 style="margin:0 0 12px 0;font-size:1.6rem">Quick Start vs Scoped Project</h2>
+    <div class="compare" style="overflow:hidden;border-radius:16px;border:1px solid rgba(255,255,255,.08)">
+      <table role="table" aria-label="Quick Start versus Scoped Project" style="width:100%;border-collapse:separate;border-spacing:0;background:var(--card)">
+        <thead>
+          <tr style="background:rgba(255,255,255,.03)">
+            <th style="padding:14px 16px;text-align:left">Capability</th>
+            <th style="padding:14px 16px;text-align:left">Quick Start</th>
+            <th style="padding:14px 16px;text-align:left">Scoped Project</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Lead routing fixes & assignment rules</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check" style="display:inline-grid;place-items:center;width:28px;aspect-ratio:1;border-radius:999px;background:linear-gradient(180deg,var(--ok),#16a34a);box-shadow:0 8px 20px rgba(34,197,94,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check" style="display:inline-grid;place-items:center;width:28px;aspect-ratio:1;border-radius:999px;background:linear-gradient(180deg,var(--ok),#16a34a);box-shadow:0 8px 20px rgba(34,197,94,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Custom low-code flows & queue setup</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Web-to-Lead configuration</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Validation rules & SLA alerts (with branded HTML templates)</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Reporting & dashboard cleanup</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Small data jobs & imports</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Big data jobs & advanced deduplication</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);opacity:.45">—</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)">Highly advanced flows & cross-system automations</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);opacity:.45">—</td>
+              <td style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+          <tr><td style="padding:14px 16px">Integrations (MuleSoft/ETL/3rd-party APIs)</td>
+              <td style="padding:14px 16px;opacity:.45">—</td>
+              <td style="padding:14px 16px"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:60%;height:60%"><path d="M5 12l4 4L19 6"/></svg></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:14px;color:var(--muted)">
+      Tip: If the scope touches several teams, multiple systems, or large datasets, a Scoped Project is usually the better fit.
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <small>© <span id="year"></span> LeadNimble — Boise, Idaho • Remote-friendly</small>
+    <small><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></small>
+  </div>
+</footer>
+
+<script>
+  // footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Glow follow for all .glow
+  function attachGlow(el){
+    el.addEventListener('pointermove', (e)=>{
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--x', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--y', (e.clientY - r.top) + 'px');
+    });
+    el.addEventListener('pointerleave', ()=>{
+      el.style.removeProperty('--x'); el.style.removeProperty('--y');
+    });
+  }
+  document.querySelectorAll('.glow').forEach(attachGlow);
+
+  // Hours selector logic (3..10, $70/hr)
+  const min=3,max=10, rate=70;
+  const hoursEl = document.getElementById('hours');
+  const minus = document.getElementById('minus');
+  const plus  = document.getElementById('plus');
+  const included = document.getElementById('included');
+  const sumHours = document.getElementById('sumHours');
+  const sumTotal = document.getElementById('sumTotal');
+  let val = 3;
+
+  function updateCopy(v){
+    if(v >= 6){
+      included.innerHTML =
+        "Includes everything in the basic set, plus: Lead Routing Fixes, custom flows, assignment rules, queues setup, web-to-lead configuration, small data jobs, validation rules and SLA alerts with branded HTML email templates, and reporting.";
+    }else{
+      included.innerHTML =
+        "Typically covers a basic health check, raw data cleaning & import, and sales workflow optimization.";
+    }
+  }
+  function render(){
+    hoursEl.textContent = val + ' ' + (val===1?'hr':'hrs');
+    sumHours.textContent = hoursEl.textContent;
+    sumTotal.textContent = '$' + (val*rate).toLocaleString();
+    minus.disabled = (val<=min);
+    plus.disabled  = (val>=max);
+    updateCopy(val);
+    sizeCardToActivePane(); // keep card height snug while tweaking hours
+  }
+  minus.addEventListener('click', ()=>{ if(val>min){ val--; render(); }});
+  plus.addEventListener('click',  ()=>{ if(val<max){ val++; render(); }});
+  render();
+
+  // Sliding panes
+  const panes = document.getElementById('panes');
+  const card  = document.getElementById('slide-card');
+  const paneConfig   = document.getElementById('pane-config');
+  const paneCheckout = document.getElementById('pane-checkout');
+
+  function sizeCardToActivePane(){
+    // Measure whichever pane is currently visible by transform value
+    const tx = getComputedStyle(panes).getPropertyValue('--tx').trim();
+    const active = (tx==='-50%') ? paneCheckout : paneConfig;
+    // Set explicit height so the container animates smoothly
+    card.style.height = active.offsetHeight + 'px';
+  }
+
+  // initial height after load
+  window.addEventListener('load', sizeCardToActivePane);
+  window.addEventListener('resize', sizeCardToActivePane);
+
+  // slide to checkout
+  document.getElementById('to-checkout').addEventListener('click', ()=>{
+    panes.style.setProperty('--tx','-50%');
+    paneCheckout.setAttribute('aria-hidden','false');
+    sizeCardToActivePane();
+  });
+
+  // slide back
+  document.getElementById('back').addEventListener('click', ()=>{
+    panes.style.setProperty('--tx','0%');
+    paneCheckout.setAttribute('aria-hidden','true');
+    sizeCardToActivePane();
+  });
+</script>
+</body>
+</html>
