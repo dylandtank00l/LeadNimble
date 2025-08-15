@@ -555,31 +555,74 @@ document.querySelectorAll('.hero-cards .card').forEach(el => {
   })();
 </script>
 <script>
-  (function () {
-    const header = document.querySelector('header');
-    const SHRINK_AT = 80;
-    const BEHAVIOR_START = 400; // header begins “smart hide” after this point
-    let lastY = window.scrollY;
+(function () {
+  const header = document.querySelector('header');
+  const SHRINK_AT = 80;
+  const BEHAVIOR_START = 400; // begin smart hide after this point
+  let lastY = window.scrollY;
 
-    const onScroll = () => {
-      const y = window.scrollY;
-      const scrollingDown = y > lastY;
+  const onScroll = () => {
+    const y = window.scrollY;
+    const down = y > lastY;
 
-      header.classList.toggle('scrolled', y > SHRINK_AT);
+    header.classList.toggle('scrolled', y > SHRINK_AT);
+    if (y > BEHAVIOR_START && down) header.classList.add('gone');
+    else header.classList.remove('gone');
 
-      if (y > BEHAVIOR_START && scrollingDown) {
-        header.classList.add('gone');     // hide while going down
-      } else {
-        header.classList.remove('gone');  // show when going up or above the start
-      }
+    lastY = y;
+  };
 
-      lastY = y;
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  })();
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
 </script>
+<script>
+(function () {
+  const header = document.querySelector('header');
+
+  const SHRINK_AT = 80;          // when the compact style kicks in
+  const START = 400;             // when the fade behavior starts
+  const RANGE = 220;             // distance over which it fully fades out (tune this)
+
+  let lastY = window.scrollY;
+
+  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+  const onScroll = () => {
+    const y = window.scrollY;
+    const down = y > lastY;
+    lastY = y;
+
+    // keep your shrink behavior
+    header.classList.toggle('scrolled', y > SHRINK_AT);
+
+    // compute fade progress t: 0 (visible) -> 1 (hidden)
+    let t = 0;
+    if (y > START) {
+      t = clamp((y - START) / RANGE, 0, 1);
+    }
+
+    // fade + slide proportionally
+    const translate = -t * 120; // matches .gone translateY(-120%)
+    header.style.opacity = (1 - t).toFixed(3);
+    header.style.transform = `translateY(${translate}%)`;
+
+    // optional: only disable pointer events when mostly hidden
+    header.style.pointerEvents = t > 0.9 ? 'none' : 'auto';
+
+    // if you still want it to snap fully gone after RANGE while scrolling down:
+    if (y > START + RANGE && down) {
+      header.classList.add('gone');
+    } else {
+      header.classList.remove('gone');
+    }
+  };
+
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+</script>
+
 
 </body>
 </html>
