@@ -14,27 +14,41 @@
     --ring: rgba(79,70,229,.35);
   }
   *,*::before,*::after{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; color:var(--text);
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    background:
-      radial-gradient(1200px 800px at 10% -10%, rgba(79,70,229,.25), transparent 60%),
-      radial-gradient(900px 600px at 100% 10%, rgba(6,182,212,.22), transparent 55%),
-      linear-gradient(180deg, var(--bg-1), var(--bg-2));
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    overflow-x:hidden;
-  }
-  /* Radial lights layer (matches index) */
-  body::before{
-    content:""; position:fixed; inset:-5% -5% -5% -5%; z-index:-1; pointer-events:none;
-    background:
-      radial-gradient(120vw 200vh at 10% -10%, rgba(79,70,229,.25) 0%, rgba(79,70,229,0) 80%),
-      radial-gradient(110vw 220vh at 100% -10%, rgba(6,182,212,.10) 0%, rgba(6,182,212,.04) 55%, #0f172a 72%);
-    background-repeat:no-repeat,no-repeat;
-    background-position:center top, right 10% top;
-  }
+  html, body { background-color: #0f172a; }   /* solid base, covers overscroll */
+
+body{
+  margin:0; color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+
+  /* keep a subtle base gradient, but not fixed */
+  background:
+    linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow-x: hidden;
+  min-height: 100svh;                     /* iOS-safe viewport height */
+}
+
+/* Radial “lights” on their own fixed layer with generous overscan */
+body::before{
+  content:"";
+  position: fixed;
+  inset: -12% -12% -12% -12%;             /* larger overscan kills side gutters */
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(120vw 200vh at 10% -10%, rgba(79,70,229,.25) 0%, rgba(79,70,229,0) 80%),
+    radial-gradient(110vw 220vh at 100% -10%, rgba(6,182,212,.10) 0%, rgba(6,182,212,.04) 55%, #0f172a 72%);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center top, right 10% top;
+}
+
+/* Short landscape viewports: overscan even more */
+@media (orientation: landscape) and (max-height: 520px){
+  body::before{ inset: -20% -16% -20% -16%; }
+}
+
 
   /* Container & card */
   .wrap{max-width:860px;margin:0 auto;padding:28px}
@@ -62,12 +76,17 @@
   /* Hero text */
   h1{font-size:clamp(28px,4.5vw,44px);line-height:1.06;margin:12px 0 6px 0}
   .muted{color:var(--muted)}
-  .check{
-    width:60px;height:60px;border-radius:50%;
-    display:grid;place-items:center;margin:0 0 10px 0;
-    background:linear-gradient(180deg,var(--ok),#16a34a);
-    box-shadow:0 10px 30px rgba(34,197,94,.35);
-  }
+.check{
+  width: clamp(44px, 9vw, 60px);
+  aspect-ratio: 1 / 1;                  /* always a circle */
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: linear-gradient(180deg, var(--ok), #16a34a);
+  box-shadow: 0 10px 30px rgba(34,197,94,.35);
+}
+.check svg{
+  width: 48%; height: 48%;              /* scales with the circle */
+}
   .row{display:flex;gap:16px;align-items:flex-start}
   .body{margin-top:6px}
 
@@ -139,7 +158,7 @@
         </div>
         <div class="body">
           <h1>Thanks — got it!</h1>
-          <p class="muted">Your message is in our queue. We'll get back to you shortly. If it’s urgent, email us directly.</p>
+          <p class="muted">Your message is in my queue. I’ll get back to you shortly. If it’s urgent, email me directly.</p>
 
           <div class="actions">
             <a class="btn" href="/">
