@@ -81,33 +81,22 @@ header.gone { transform: translateY(-110%); opacity: 0; }
     background:linear-gradient(90deg,#fff 0%,#e0e7ff 40%,#a5f3fc 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent}
   .subtitle{color:#cbd5e1;max-width:780px}
-/* Card resizes smoothly */
-.flow-card{
+/* --- Sliding request → checkout card --- */
+.flow-card {
   position: relative;
   overflow: hidden;
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,.08);
   background: transparent;
-  transition: height .35s ease;   /* ← animate height */
 }
-
-/* Slide strip */
-.panes{
-  display: flex;                  /* ← was grid */
-  width: 200%;
-  transform: translateX(0);
+.panes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 2000%;
   transition: transform .42s cubic-bezier(.22,.61,.36,1);
   will-change: transform;
 }
-.flow-card.show-checkout .panes{ transform: translateX(-50%); }
-
-.pane{
-  flex: 0 0 50%;                  /* each pane = half the strip */
-  box-sizing: border-box;
-  padding: 20px;
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  box-shadow: 0 20px 60px rgba(0,0,0,.2);
-}
+.flow-card.show-checkout .panes { transform: translateX(-50%); }
 
 
 /* “Stripe” summary look */
@@ -237,7 +226,7 @@ header.gone { transform: translateY(-110%); opacity: 0; }
   </section>
 
  <section class="container section">
-  <div class="flow-card" id="qs-flow">
+
     <div class="panes" id="qs-panes">
 
       <!-- PANE 1: hours selector -->
@@ -452,39 +441,6 @@ header.gone { transform: translateY(-110%); opacity: 0; }
   });
 
   render();
-</script>
-<script>
-  const flow   = document.querySelector('.flow-card');
-  const panes  = document.querySelectorAll('.pane'); // [selector, checkout]
-
-  function fitToActive(){
-    const activeIndex = flow.classList.contains('show-checkout') ? 1 : 0;
-    const h = panes[activeIndex].scrollHeight;
-    flow.style.height = h + 'px';
-  }
-
-  // Observe pane size changes (content expand/collapse, fonts, etc.)
-  const ro = new ResizeObserver(fitToActive);
-  panes.forEach(p => ro.observe(p));
-
-  // Initial fit after layout
-  window.addEventListener('load', fitToActive);
-  window.addEventListener('resize', fitToActive);
-
-  // When you toggle panes, call fit after the class flips
-  // Example hooks (adjust to your existing buttons/logic):
-  document.getElementById('request').addEventListener('click', () => {
-    flow.classList.add('show-checkout');
-    requestAnimationFrame(fitToActive);      // next frame ensures correct measurement
-  });
-
-  document.getElementById('edit').addEventListener('click', () => {
-    flow.classList.remove('show-checkout');
-    requestAnimationFrame(fitToActive);
-  });
-
-  // If you modify hours text dynamically, just call fitToActive() after render()
-  // render(); fitToActive();
 </script>
 
 </body>
