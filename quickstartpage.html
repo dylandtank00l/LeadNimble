@@ -229,12 +229,30 @@ button {
   footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0;color:var(--muted)}
   @media (max-width:640px){ .nav .navlinks{display:none} }
   
-  @media (max-width: 640px) {
+/* Tighten the hero + first section on phones */
+@media (max-width: 640px) {
   .hero {
-    padding-top: 60px; /* or whatever looks good */
-    padding-bottom: 20px;
+    /* leave room for sticky header + notch, but cut the excess */
+    padding-top: calc(56px + env(safe-area-inset-top));
+    padding-bottom: 8px;            /* was 20px */
+  }
+
+  .title {
+    line-height: 1.15;              /* was 2.06 — main culprit */
+    margin: 4px 0 6px;              /* slightly tighter */
+    font-size: clamp(28px, 8.5vw, 40px); /* a touch smaller so it wraps cleaner */
+  }
+
+  .subtitle {
+    margin-top: 4px;                /* reduce extra air under the title */
+  }
+
+  /* Reduce the gap before the hours selector (the very next section) */
+  main .section:first-of-type {
+    padding-top: 10px;              /* was 26px */
   }
 }
+
 @media (max-width: 640px) {
   .hero {
     padding-top: calc(60px + 1rem); /* small buffer under sticky header */
